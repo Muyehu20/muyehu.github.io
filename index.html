@@ -182,6 +182,57 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/08/19/JAVA-VIRTUAL-MACHINE/" target="_self">
+          JAVA VIRTUAL MACHINE
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/19/JAVA-VIRTUAL-MACHINE/" target="_self">
+          
+          
+            
+          
+          虚拟机栈Java virtual machine stack 
+栈内存是线程私有的
+有一个方法则产生一个栈帧
+-Xss是修改线程大小(栈帧大小)的值
+如果一个局部变量没有逃离方法的作用范围,它是线程安全的,反之则不行
+问题1:cpu使用过多如何排查ps H -eo pid,tid,%cpu|grep 进程id
+查看线程
+jstack 进程id
+​    可以根据线程id找到有问题的线程,进一步定位
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-19 19:57" pubdate>
+              2021-08-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JVM-jvm/">JVM jvm</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/08/18/Netty-doc/" target="_self">
           Netty-doc
         </a>

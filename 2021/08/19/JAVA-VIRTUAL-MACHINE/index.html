@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/cat.png">
+  <link rel="icon" href="/img/cat.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>JAVA VIRTUAL MACHINE - SuMuZhe</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>MUYEHU</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JAVA VIRTUAL MACHINE">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-19 19:57" pubdate>
+        August 19, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JAVA VIRTUAL MACHINE</h1>
+            
+            <div class="markdown-body">
+              <h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>Java virtual machine stack </p>
+<p>栈内存是线程私有的</p>
+<p>有一个方法则产生一个栈帧</p>
+<p>-Xss是修改线程大小(栈帧大小)的值</p>
+<p>如果一个局部变量没有逃离方法的作用范围,它是线程安全的,反之则不行</p>
+<h3 id="问题1-cpu使用过多如何排查"><a href="#问题1-cpu使用过多如何排查" class="headerlink" title="问题1:cpu使用过多如何排查"></a>问题1:cpu使用过多如何排查</h3><p>ps H -eo pid,tid,%cpu|grep 进程id</p>
+<p>查看线程</p>
+<p>jstack 进程id</p>
+<p>​    可以根据线程id找到有问题的线程,进一步定位奥问题代码的源码行号</p>
+<h3 id="问题2-程序运行很久之后没有结果如何排查"><a href="#问题2-程序运行很久之后没有结果如何排查" class="headerlink" title="问题2:程序运行很久之后没有结果如何排查"></a>问题2:程序运行很久之后没有结果如何排查</h3><p>jstack 进程id</p>
+<p>查看最后的输出</p>
+<p>查看发生死锁的地方(deadlock)</p>
+<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>native</p>
+<p>因为jvm隔绝了底层操作系统</p>
+<p>本地方法栈就是调用底层的方法</p>
+<p>放在本地方法栈</p>
+<h2 id="堆内存"><a href="#堆内存" class="headerlink" title="堆内存"></a>堆内存</h2><p>通过new关键字,创建对象都会使用堆内存</p>
+<p>特点</p>
+<ul>
+<li><p>他是线程共享的,堆中对象都要考虑线程安全问题</p>
+</li>
+<li><p>有垃圾回收机制</p>
+</li>
+</ul>
+<p>堆内存溢出</p>
+<p>-Xmx 用于设置heap中内存的最大值</p>
+<p>排查堆内存的问题:设置堆内存大小小一点</p>
+<p>堆内存诊断工具</p>
+<p>jps工具</p>
+<ul>
+<li>查看当前系统中有哪些java进程</li>
+</ul>
+<p>jmap工具</p>
+<ul>
+<li>查看堆内存占用情况</li>
+</ul>
+<p>jconsole工具</p>
+<ul>
+<li>图形界面的,多功能的监测工具,可以连续监测</li>
+</ul>
+<p>jvisualvm工具</p>
+<h3 id="方法区-Method-Area"><a href="#方法区-Method-Area" class="headerlink" title="方法区(Method Area)"></a>方法区(Method Area)</h3><p>概念上是堆的一部分</p>
+<p>方法区只是一种概念,(hotspot)1.6之前的实现是叫永久代,堆空间的一部分,1.8之后实现方式叫元空间(metaspace),使用到了本地内存(include:其他进程,metaspace)</p>
+<p>PermGen中</p>
+<p>-XX:MaxPermSize = 8m</p>
+<p>meta space 中</p>
+<p>-XX:MaxMetaspaceSize = 8m</p>
+<p>场景</p>
+<p>spring</p>
+<p>mybatis</p>
+<h4 id="常量池-constand-pool"><a href="#常量池-constand-pool" class="headerlink" title="常量池(constand pool)"></a>常量池(constand pool)</h4><p>StringTable特性</p>
+<ul>
+<li>常量池中的字符仅仅只是符号,第一次用到时才变为对象</li>
+<li>避免重复创造字符串</li>
+<li>字符串拼接原理StringBuilder(1.8),makeConcatwithContents(9以后)</li>
+<li>字符串拼接的原理是编译期优化</li>
+<li>可以使用intern方法,主动将串池中没有的字符串对象放入串池</li>
+</ul>
+<p>使用 javap -v class文件名</p>
+<p>查看常量池中的相关操作信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo5</span> </span>&#123;<br>    <span class="hljs-comment">//运行时常量池中的信息,都会被加载到运行时常量池中,都是常量池中的符号,还没有变成java字符串对象</span><br>    <span class="hljs-comment">//ldc #7 会把 a 符号变为 &quot;a&quot; 字符串对象</span><br>    <span class="hljs-comment">//ldc #9 会把 a 符号变为 &quot;b&quot; 字符串对象</span><br>    <span class="hljs-comment">//ldc #11 会把 a 符号变为 &quot;ab&quot; 字符串对象</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        String s1 = <span class="hljs-string">&quot;a&quot;</span>;<span class="hljs-comment">//懒惰的</span><br>        String s2 = <span class="hljs-string">&quot;b&quot;</span>;<br>        String s3 = <span class="hljs-string">&quot;ab&quot;</span>;<br>        String s4 = s1+s2;<span class="hljs-comment">//结果不确定,所以要动态拼接,jdk8是StringBuilder,jdk9开始是makeConcatwithContents</span><br>        String s5 = <span class="hljs-string">&quot;a&quot;</span>+<span class="hljs-string">&quot;b&quot;</span>;<span class="hljs-comment">//确定的结果,javac在编译期间的优化,结果已经在编译期间确定为ab</span><br>        System.out.println(s3==s5);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>可以用intern方法将字符串放入StringTable中(1.8以后)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo7</span> </span>&#123;<br>    <span class="hljs-comment">//StringTable:&#123;a,b,ab&#125;(1)</span><br>    <span class="hljs-comment">//StringTable:&#123;ab,a,b&#125;</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        String x = <span class="hljs-string">&quot;ab&quot;</span>;<br>        String s = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;a&quot;</span>)+<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;b&quot;</span>);<span class="hljs-comment">//new String&#123;a,b&#125;</span><br>        <span class="hljs-comment">//堆 new String(&quot;a&quot;) new String(&quot;b&quot;) new String(&quot;ab&quot;),是堆中创立的对象</span><br>        String s1 = s.intern();<span class="hljs-comment">//将&quot;ab&quot;放入串池中,有则不放,没有则放,s1 是串池中创建的</span><br>        System.out.println(s==<span class="hljs-string">&quot;ab&quot;</span>);<span class="hljs-comment">//s在堆中因为,已经有了所以不放入</span><br>        System.out.println(s1==<span class="hljs-string">&quot;ab&quot;</span>);<span class="hljs-comment">//串池中已经有了ab,s不放入,</span><br>        <span class="hljs-comment">//结果</span><br>        <span class="hljs-comment">//false</span><br>       	<span class="hljs-comment">//true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>1.6的时候</p>
+<p>将这个字符串对象尝试放入串池,如果有则放入,没有则不放入,但是会new一份放入串池</p>
+<p>在1.6中StringTable放在永久代中(此时永久代也在heap中)</p>
+<p>1.7以后开始放在堆中(heap  include StringTabler),而此时方法区的实现在本地内存中,被叫做元空间(meta space) (class,classLoader,常量池)</p>
+<h3 id="StringTable会发生垃圾回收"><a href="#StringTable会发生垃圾回收" class="headerlink" title="StringTable会发生垃圾回收"></a>StringTable会发生垃圾回收</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 演示StringTable垃圾回收</span><br><span class="hljs-comment"> * -Xmx10m -XX:+PrintStringTableStatistics -Xlog:gc* -verbose:gc</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo9</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">1000000</span>; j++) &#123;<br>                String.valueOf(j).intern();<br>                i++;<br>            &#125;<br>        &#125;<span class="hljs-keyword">catch</span> (Throwable e)&#123;<br>            e.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            System.out.println(i);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="StringTable性能调优"><a href="#StringTable性能调优" class="headerlink" title="StringTable性能调优"></a>StringTable性能调优</h2><p>-XX:StringTableSize=桶个数;</p>
+<p>设置StringTable中桶的数量以提高运行速度(减少hash碰撞)</p>
+<p>考虑字符串对象是否入池</p>
+<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>属于操作系统内存,不受java虚拟机的管理</p>
+<p>使用unsafe对象进行直接内存的分配回收,并且回收需要主动调用freeMemory方法</p>
+<p>ByteBuffer的实现内部,使用了Cleaner(虚引用 phantomReference)来监测ByteBuffer对象,一旦ByteBuffer对象被垃圾回收,那么就会由Reference线程通过Cleaner的clean方法调用freeMemory来释放直接内存</p>
+<p>建议使用unsafe.freeMemory() 来进行回收直接内存而不是system.gc();</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JVM-jvm/">JVM jvm</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    You will never know what you are gonna get
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/18/Netty-doc/">
+                        <span class="hidden-mobile">Netty-doc</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>chubinbin</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>leileimiao</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
