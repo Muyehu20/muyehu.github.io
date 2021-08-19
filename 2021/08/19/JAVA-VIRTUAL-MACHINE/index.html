@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.2k 字
+      1.5k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      17
        分钟
     </span>
   
@@ -310,6 +310,26 @@
 <p>使用unsafe对象进行直接内存的分配回收,并且回收需要主动调用freeMemory方法</p>
 <p>ByteBuffer的实现内部,使用了Cleaner(虚引用 phantomReference)来监测ByteBuffer对象,一旦ByteBuffer对象被垃圾回收,那么就会由Reference线程通过Cleaner的clean方法调用freeMemory来释放直接内存</p>
 <p>建议使用unsafe.freeMemory() 来进行回收直接内存而不是system.gc();</p>
+<h2 id="垃圾回收-Garbage-Collection"><a href="#垃圾回收-Garbage-Collection" class="headerlink" title="垃圾回收(Garbage Collection)"></a>垃圾回收(Garbage Collection)</h2><h4 id="如何判断对象可以被回收"><a href="#如何判断对象可以被回收" class="headerlink" title="如何判断对象可以被回收"></a>如何判断对象可以被回收</h4><h5 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h5><p>循环引用时有弊端</p>
+<p>内存无法回收造成内存泄漏</p>
+<p><img src="E:\workspace\Blog\blog\source\img\image-20210819201425344.png" srcset="/img/loading.gif" lazyload alt="image-20210819201425344"></p>
+<h5 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h5><p>Gc Root对象大概是可以理解为肯定不能当成垃圾回收的对象.</p>
+<ul>
+<li>扫描堆中的对象,看是否可以沿Gc Root对象为起点的引用链中找到该对象,找不到,表示可以回收.</li>
+<li>哪些对象可以作为Gc Root?</li>
+</ul>
+<p>使用Memory Analyzer工具配合jmap命令使用</p>
+<p><img src="E:\workspace\Blog\blog\source\img\image-20210819220228916.png" srcset="/img/loading.gif" lazyload alt="image-20210819220228916"></p>
+<p><img src="E:\workspace\Blog\blog\source\img\image-20210819220312418.png" srcset="/img/loading.gif" lazyload alt="image-20210819220312418"></p>
+<h4 id="五种引用"><a href="#五种引用" class="headerlink" title="五种引用"></a>五种引用</h4><ul>
+<li>强引用  不会被垃圾回收</li>
+<li>软引用  内存不够,并且没有被强引用引用</li>
+<li>弱引用  无论内存够不够,只要进行内存回收就直接回收(配合引用队列引用)</li>
+</ul>
+<ul>
+<li>虚引用  ByteBuffer Cleaner 直接内存回收</li>
+<li>终结器引用 A4对象finalize()</li>
+</ul>
 
             </div>
             <hr>
