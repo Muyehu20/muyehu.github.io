@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>JAVA VIRTUAL MACHINE - SuMuZhe</title>
+  <title>Java v Machine - SuMuZhe</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="JAVA VIRTUAL MACHINE">
+            <span class="h2" id="subtitle" title="Java v Machine">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-19 19:57" pubdate>
-        August 19, 2021 pm
+      <time datetime="2021-08-20 10:50" pubdate>
+        August 20, 2021 am
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.9k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      26
        分钟
     </span>
   
@@ -225,7 +225,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">JAVA VIRTUAL MACHINE</h1>
+            <h1 style="display: none">Java v Machine</h1>
             
             <div class="markdown-body">
               <h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>Java virtual machine stack </p>
@@ -312,24 +312,35 @@
 <p>建议使用unsafe.freeMemory() 来进行回收直接内存而不是system.gc();</p>
 <h2 id="垃圾回收-Garbage-Collection"><a href="#垃圾回收-Garbage-Collection" class="headerlink" title="垃圾回收(Garbage Collection)"></a>垃圾回收(Garbage Collection)</h2><h4 id="如何判断对象可以被回收"><a href="#如何判断对象可以被回收" class="headerlink" title="如何判断对象可以被回收"></a>如何判断对象可以被回收</h4><h5 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h5><p>循环引用时有弊端</p>
 <p>内存无法回收造成内存泄漏</p>
-<p><img src="E:\workspace\Blog\blog\source\img\image-20210819201425344.png" srcset="/img/loading.gif" lazyload alt="image-20210819201425344"></p>
+<p><img src="/.com//%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95.png" srcset="/img/loading.gif" lazyload alt="引用计数法"></p>
 <h5 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h5><p>Gc Root对象大概是可以理解为肯定不能当成垃圾回收的对象.</p>
 <ul>
 <li>扫描堆中的对象,看是否可以沿Gc Root对象为起点的引用链中找到该对象,找不到,表示可以回收.</li>
 <li>哪些对象可以作为Gc Root?</li>
 </ul>
 <p>使用Memory Analyzer工具配合jmap命令使用</p>
-<p><img src="E:\workspace\Blog\blog\source\img\image-20210819220228916.png" srcset="/img/loading.gif" lazyload alt="image-20210819220228916"></p>
-<p><img src="E:\workspace\Blog\blog\source\img\image-20210819220312418.png" srcset="/img/loading.gif" lazyload alt="image-20210819220312418"></p>
+<p><img src="/.com//GCRoot1.png" srcset="/img/loading.gif" lazyload alt="GCRoot1"></p>
+<p><img src="/.com//GCRoot2.png" srcset="/img/loading.gif" lazyload alt="GCRoot2"></p>
 <h4 id="五种引用"><a href="#五种引用" class="headerlink" title="五种引用"></a>五种引用</h4><ul>
 <li>强引用  不会被垃圾回收</li>
-<li>软引用  内存不够,并且没有被强引用引用</li>
+<li>软引用  内存不够,并且没有被强引用引用(配合引用队列使用)</li>
 <li>弱引用  无论内存够不够,只要进行内存回收就直接回收(配合引用队列引用)</li>
 </ul>
 <ul>
-<li>虚引用  ByteBuffer Cleaner 直接内存回收</li>
+<li>虚引用  主要配合ByteBuffer使用 必须配合引用队列使用主要配合ByteBuffer使用,被引用对象回收时,会将虚引用入队,由Reference Handler 线程调用虚引用相关方法释放直接内存</li>
 <li>终结器引用 A4对象finalize()</li>
 </ul>
+<p>软引用示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 演示软引用</span><br><span class="hljs-comment"> * -Xmx20m -XX:+PrintGCDetails -verbose:gc</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo14</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span>  <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _4MB = <span class="hljs-number">4</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br><span class="hljs-comment">//        List&lt;byte[]&gt; list = new ArrayList&lt;&gt;();</span><br><span class="hljs-comment">//        for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="hljs-comment">//            list.add(new byte[_4MB]);</span><br><span class="hljs-comment">//        &#125;</span><br><span class="hljs-comment">//        System.in.read();</span><br>        soft();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  <span class="hljs-keyword">void</span> <span class="hljs-title">soft</span><span class="hljs-params">()</span></span>&#123;<br>        List&lt;SoftReference&lt;<span class="hljs-keyword">byte</span>[]&gt;&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>        <span class="hljs-comment">//清理无用的软引用</span><br>        ReferenceQueue&lt;<span class="hljs-keyword">byte</span>[]&gt; queue = <span class="hljs-keyword">new</span> ReferenceQueue&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            <span class="hljs-comment">//关联了引用队列,当软引用所关联的byte数组被回收时,软引用自己就会加入到ReferenceQueue中</span><br>            SoftReference&lt;<span class="hljs-keyword">byte</span>[]&gt; ref = <span class="hljs-keyword">new</span> SoftReference&lt;&gt;(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_4MB],queue);<br>            System.out.println(ref.get());<br>            list.add(ref);<br>            System.out.println(list.size());<br>        &#125;<br>        Reference&lt;? extends <span class="hljs-keyword">byte</span>[]&gt; poll = queue.poll();<br>        <span class="hljs-keyword">while</span> (poll!=<span class="hljs-keyword">null</span>)&#123;<br>            list.remove(poll);<br>            poll = queue.poll();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;循环结束&quot;</span>+list.size());<br>        <span class="hljs-keyword">for</span> (SoftReference&lt;<span class="hljs-keyword">byte</span>[]&gt; ref : list) &#123;<br>            System.out.println(ref.get());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>弱引用示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.zcb.jvm;<br><br><span class="hljs-keyword">import</span> java.lang.ref.Reference;<br><span class="hljs-keyword">import</span> java.lang.ref.ReferenceQueue;<br><span class="hljs-keyword">import</span> java.lang.ref.WeakReference;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 弱引用示例</span><br><span class="hljs-comment"> * -Xmx20m -XX:-PrintGCDetails -verbose:gc</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo15</span> </span>&#123;<br>    <span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span>  <span class="hljs-keyword">final</span>  <span class="hljs-keyword">int</span> _4MB = <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">4</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        weak();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span>  <span class="hljs-keyword">void</span> <span class="hljs-title">weak</span><span class="hljs-params">()</span></span>&#123;<br>        List&lt;WeakReference&lt;<span class="hljs-keyword">byte</span>[]&gt;&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>        ReferenceQueue&lt;<span class="hljs-keyword">byte</span>[]&gt; queue = <span class="hljs-keyword">new</span> ReferenceQueue&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++) &#123;<br>            WeakReference&lt;<span class="hljs-keyword">byte</span>[]&gt; ref = <span class="hljs-keyword">new</span> WeakReference&lt;&gt;(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_4MB],queue);<br>            list.add(ref);<br>            <span class="hljs-keyword">for</span> (WeakReference&lt;<span class="hljs-keyword">byte</span>[]&gt; weakReference : list) &#123;<br>                System.out.println(weakReference.get()+<span class="hljs-string">&quot; &quot;</span>);<br>            &#125;<br>            System.out.println();<br>        &#125;<br>        Reference&lt;? extends <span class="hljs-keyword">byte</span>[]&gt; poll = queue.poll();<br>        <span class="hljs-keyword">while</span>(poll!=<span class="hljs-keyword">null</span>)&#123;<br>            list.remove(poll);<br>            poll = queue.poll();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;进行引用队列释放弱引用本身&quot;</span>);<br>        <span class="hljs-keyword">for</span> (WeakReference&lt;<span class="hljs-keyword">byte</span>[]&gt; weakReference : list) &#123;<br>            System.out.println(weakReference.get());<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;循环结束&quot;</span>+list.size());<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="标记清除算法-Mark-sweep"><a href="#标记清除算法-Mark-sweep" class="headerlink" title="标记清除算法(Mark sweep)"></a>标记清除算法(Mark sweep)</h3><p><img src="/.com//%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4.png" srcset="/img/loading.gif" lazyload alt="标记-清除"></p>
 
             </div>
             <hr>
@@ -340,7 +351,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/JVM-jvm/">JVM jvm</a>
+                      <a class="hover-with-bg" href="/tags/JAVA-java-jvm-JVM/">JAVA java jvm JVM</a>
                     
                   </div>
                 
