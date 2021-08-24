@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Java v Machine - SuMuZhe</title>
+  <title>Java Virtual Machine - SuMuZhe</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Java v Machine">
+            <span class="h2" id="subtitle" title="Java Virtual Machine">
               
             </span>
 
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      2.5k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      33
        分钟
     </span>
   
@@ -225,7 +225,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java v Machine</h1>
+            <h1 style="display: none">Java Virtual Machine</h1>
             
             <div class="markdown-body">
               <h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>Java virtual machine stack </p>
@@ -341,6 +341,98 @@
 
 
 <h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><h3 id="标记清除算法-Mark-sweep"><a href="#标记清除算法-Mark-sweep" class="headerlink" title="标记清除算法(Mark sweep)"></a>标记清除算法(Mark sweep)</h3><p><img src="/.com//%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4.png" srcset="/img/loading.gif" lazyload alt="标记-清除"></p>
+<ul>
+<li>Mark:哪些对象是垃圾</li>
+<li>sweep:将没有被RootGC引用的内存回收,空闲内存被加入到空闲队列中</li>
+<li>优点: 速度快</li>
+<li>缺点: 会产生内存碎片,因为空间不连续,导致一部分对象不能加入进来</li>
+</ul>
+<h3 id="标记-整理算法-Mark-Compat"><a href="#标记-整理算法-Mark-Compat" class="headerlink" title="标记-整理算法(Mark Compat)"></a>标记-整理算法(Mark Compat)</h3><p><img src="/.com//image-20210820111325234.png" srcset="/img/loading.gif" lazyload alt="image-20210820111325234"></p>
+<ul>
+<li>mark: 标记(同标记清除算法的标记)</li>
+<li>compat:整理</li>
+<li>优点:没有内存碎片</li>
+<li>缺点:涉及的工作很多,因为内存发生了移动(速度慢)</li>
+</ul>
+<h3 id="复制算法-Copy"><a href="#复制算法-Copy" class="headerlink" title="复制算法(Copy)"></a>复制算法(Copy)</h3><p><img src="/.com//image-20210820111631393.png" srcset="/img/loading.gif" lazyload alt="image-20210820111631393"></p>
+<ul>
+<li>不会有内存碎片</li>
+<li>需要占用双倍内存空间</li>
+</ul>
+<h3 id="分代垃圾回收"><a href="#分代垃圾回收" class="headerlink" title="分代垃圾回收"></a>分代垃圾回收</h3><p><img src="/.com//image-20210820153630999.png" srcset="/img/loading.gif" lazyload alt="image-20210820153630999"></p>
+<ul>
+<li>对象创建之后首先被加入Eden区中</li>
+<li>在Eden区内存不足时,会触发Minor GC,将Eden区和From区通过Copy算法将幸存对象存放在幸存区To中,给对象年龄+1,然后将From指针和To交换位置</li>
+<li>Minor GC触发时会引发Stop the world ,暂停其他用户的线程,等垃圾回收结束,用户线程才恢复运行</li>
+<li>当新生代区对象年龄到达15的阈值后,会晋升至老年代,嘴大寿命是15(4bit)</li>
+<li>当老年代空间不足,会先尝试触发minor gc,如果任然不足,那么会触发full gc,Stop the world 时间会很长</li>
+<li>如果空间任然不足,则会触发Out Of Memery,heap space</li>
+</ul>
+<h4 id="相关vm参数"><a href="#相关vm参数" class="headerlink" title="相关vm参数"></a>相关vm参数</h4><table>
+<thead>
+<tr>
+<th>含义</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>堆初始大小</td>
+<td>-Xms</td>
+</tr>
+<tr>
+<td>堆最大大小</td>
+<td>-Xmx</td>
+</tr>
+<tr>
+<td>新生代大小</td>
+<td>-Xmn</td>
+</tr>
+<tr>
+<td>幸存区比例(动态)</td>
+<td>-XX:InitiallSurvivorRatio=ratio和-XX:+UseAdaptiveSizePolicy</td>
+</tr>
+<tr>
+<td>幸存区比例</td>
+<td>-XX:SuvivorRatio=ratio</td>
+</tr>
+<tr>
+<td>晋升阈值</td>
+<td>-XX:MaxTenuringThreshold=threshold</td>
+</tr>
+<tr>
+<td>晋升详情</td>
+<td>-XX:+PrintTenuringDistribution</td>
+</tr>
+<tr>
+<td>GC详情</td>
+<td>-XX:+PrintGCDetails -verbose:gc</td>
+</tr>
+<tr>
+<td>Full GC前MinorGC</td>
+<td>-XX:+ScavengeBeforeFullGC</td>
+</tr>
+</tbody></table>
+<p>垃圾回收案例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo16</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _512KB = <span class="hljs-number">1024</span>*<span class="hljs-number">512</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _1MB = <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _6MB = <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">6</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _7MB = <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">7</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> _8MB = <span class="hljs-number">1024</span>*<span class="hljs-number">1024</span>*<span class="hljs-number">8</span>;<br>    <span class="hljs-comment">//-Xms20m -Xmx20m -Xmn10m -XX:+UseSerialGC -XX:+PrintGCDetails verbose:gc</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        List&lt;<span class="hljs-keyword">byte</span>[]&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>        <span class="hljs-comment">//list.add(new byte[_8MB]);</span><br>        <span class="hljs-comment">//会直接进入老年代</span><br>        <span class="hljs-comment">//list.add(new byte[_8MB]);</span><br>        <span class="hljs-comment">//会发生java heap space</span><br>        list.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_7MB]);<br>        list.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_512KB]);<br>        list.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_512KB]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>打印的日志</p>
+<p><img src="/.com//image-20210820171812273.png" srcset="/img/loading.gif" lazyload alt="image-20210820171812273"></p>
+<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><h5 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h5><p>-XX:+UseSerial = Serial+SerialOld</p>
+<p><img src="/.com//image-20210820215424136.png" srcset="/img/loading.gif" lazyload alt="image-20210820215424136"></p>
+<h5 id="吞吐量优先"><a href="#吞吐量优先" class="headerlink" title="吞吐量优先"></a>吞吐量优先</h5><p><img src="/.com//image-20210821190452521.png" srcset="/img/loading.gif" lazyload alt="image-20210821190452521"></p>
+<p>UseParallelGC</p>
+<p>UseAdaptiveSizePolicy</p>
+<p>GCTimeRatio=ratio //增大堆</p>
+<p>MaxGCPauseMillis = ms 减小堆</p>
+<p>ParallelGCThreads</p>
+<h5 id="响应时间优先-cms垃圾回收器"><a href="#响应时间优先-cms垃圾回收器" class="headerlink" title="响应时间优先(cms垃圾回收器)"></a>响应时间优先(cms垃圾回收器)</h5><p><img src="/.com//image-20210821190515735.png" srcset="/img/loading.gif" lazyload alt="image-20210821190515735"></p>
+<p>+UseConcMarkSweepGC<del>-XX:+UseParNewGC</del>SerialOld</p>
+<p>ParallelGCThreads</p>
+<p>工作在老年代</p>
+<h5 id="Gabage-First-g1"><a href="#Gabage-First-g1" class="headerlink" title="Gabage First(g1)"></a>Gabage First(g1)</h5><p>UseG1GC</p>
+<p>堆被划分</p>
 
             </div>
             <hr>
@@ -351,7 +443,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/JAVA-java-jvm-JVM/">JAVA java jvm JVM</a>
+                      <a class="hover-with-bg" href="/tags/jvm-JVM/">jvm JVM</a>
                     
                   </div>
                 
@@ -367,6 +459,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/08/24/Review/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Review</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
